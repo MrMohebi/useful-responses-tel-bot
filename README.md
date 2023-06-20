@@ -1,7 +1,7 @@
 ## frequently used sentences
 
 recommender for frequently used sentences in telegram.
-It's an inline bot witch read messages from [@usefulha](https://t.me/usefulha) channel
+It's an inline query bot witch read messages from [@usefulha](https://t.me/usefulha) channel
 each 2 minutes and let u to send them by id or search letters
 
 #goshadism

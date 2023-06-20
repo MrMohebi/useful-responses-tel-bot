@@ -12,9 +12,12 @@ load_dotenv()
 
 MESSAGES = {}
 
+CHANNEL = os.getenv('CHANNEL_USERNAME')
+TOKEN = os.getenv('TELEGRAM_TOKEN')
 
 def get_message_from_telegram(msg_id):
-    url = f'https://t.me/usefulha/{msg_id}'
+    global CHANNEL
+    url = f'https://t.me/{CHANNEL}/{msg_id}'
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
 
@@ -69,7 +72,7 @@ thread_channel_messages = threading.Thread(target=get_channel_messages_interval,
 thread_channel_messages.daemon = True
 thread_channel_messages.start()
 
-app = Application.builder().token(os.getenv('TELEGRAM_TOKEN')).build()
+app = Application.builder().token(TOKEN).build()
 
 app.add_handler(InlineQueryHandler(inline_query))
 
