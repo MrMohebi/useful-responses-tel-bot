@@ -1,0 +1,8 @@
+# ports: HOST:CONTAINER
+version: '3.8'
+services:
+    python:
+        build:
+            context: ./
+        container_name: useful-responses-tel-bot-python
+        restart: unless-stopped
