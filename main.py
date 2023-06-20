@@ -14,15 +14,22 @@ MESSAGES = {}
 
 CHANNEL = os.getenv('CHANNEL_USERNAME')
 TOKEN = os.getenv('TELEGRAM_TOKEN')
+MAX_READ_MESSAGE = int(os.getenv('MAX_READ_MESSAGE'))
+
 
 def get_message_from_telegram(msg_id):
     global CHANNEL
-    url = f'https://t.me/{CHANNEL}/{msg_id}'
-    response = requests.get(url)
-    soup = BeautifulSoup(response.content, 'html.parser')
+    try:
+        url = f'https://t.me/{CHANNEL}/{msg_id}'
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
 
-    meta_tag = soup.find('meta', {'name': 'twitter:description'})
-    return meta_tag.get('content')
+        meta_tag = soup.find('meta', {'name': 'twitter:description'})
+        return meta_tag.get('content')
+    except Exception as e:
+        print(e)
+
+    return "You can view and join aaa"
 
 
 def get_channel_messages_interval(max_search):
@@ -68,7 +75,7 @@ async def inline_query(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     await update.inline_query.answer(results)
 
 
-thread_channel_messages = threading.Thread(target=get_channel_messages_interval, args=(10,))
+thread_channel_messages = threading.Thread(target=get_channel_messages_interval, args=(MAX_READ_MESSAGE,))
 thread_channel_messages.daemon = True
 thread_channel_messages.start()
 
